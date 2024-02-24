@@ -13,7 +13,7 @@ Requirements:
 
 ## `psd_to_spritesheet.py`
 
-Converts a multi-layered `.psd` into a horizontal spritesheet. Output is a `.png` and a `.psd` (placed in the same folder as input).
+Converts a multi-layered `.psd` into a horizontal spritesheet. Output is a `.png`
 
 Usage:
 
