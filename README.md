@@ -18,11 +18,7 @@ Converts a multi-layered `.psd` into a horizontal spritesheet. Output is a `.png
 Usage:
 
 ```
-python psd_to_spritesheet.py %PATH_TO_INPUT_PSD%
+python psd_to_spritesheet.py
 ```
 
-Example:
-
-```
-python psd_to_spritesheet.py ./frames/layers.psd
-```
+change line 14 to be the name of your psd, `psd_name = "walk"`
