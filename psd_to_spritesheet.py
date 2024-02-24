@@ -37,5 +37,4 @@ for frame in  tqdm(frames,colour="green",postfix="psd-to-spritesheet",dynamic_nc
 
 spritesheet.save(f'{psd_name}.png')
 print(f'{bcolors.CYAN}spritesheet saved as {psd_name}.png \n {bcolors.ENDC}')
-
 print(f"{bcolors.GREEN}\n done!{bcolors.ENDC}")
