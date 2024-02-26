@@ -1,42 +1,64 @@
-# from psd_tools import PSDImage
-# from PIL import Image
-# from time import sleep
-# from tqdm import tqdm
-# from bcolors import bc
-# import typer
-
-print("Work In Progress")
 
 
-# psd_name = "walk"
-# psd = PSDImage.open(psd_name + '.psd')
-# frames = []
-# length = len(psd._layers)
-# print( f"{bc.b}Choose 2 or more sprite sheets to combine and their order...{bc.E} \n ")  
-# print( f"{bc.y}WARNING: Make sure all layers are not in GROUPS{bc.E}\n")
+
+import os
+from psd_tools import PSDImage
+from PIL import Image
+import sys
+from bcolors import bc
+import glob
+import inquirer
+from pprint import pprint
+from tqdm import tqdm
+sys.path.append(os.path.realpath("."))
+
+print(f" Welcome to the sprite sheet combiner! This programs allows to to combine single animations like the ones generated from {bc.B} psd_to_spritesheet.py{bc.E} into a single vertical sprite sheet with multiple animations (PNG format)\n ")
+print(f"Make sure to move the sheets you want to combine into the spriteSheets directory ")
+
+pngs = []
+output_sheet=None
+height=0
+maxWidth=0
+name="example"
+names = []
+
+def createNewSheet():
+    widths, heights = zip(*(i.size for i in pngs)) 
+    height= sum(heights) #horizontal max
+    maxWidth = max(widths) 
+    output_sheet = Image.new('RGB', (maxWidth, height))
+    y_offset = 0
+    for img in tqdm(pngs,colour="green",postfix="psd-to-spritesheet",dynamic_ncols=True, desc="frames to spritesheet "):
+        output_sheet.paste(img, (0,y_offset))
+        y_offset += img.size[1]
+        output_sheet.save(f'./combinedSpritesheets/example.png', )
+   
+
+#Pngs
+dir_path = "./spritesheets"
+for filepath in glob.glob(f"{dir_path}/*.png"):
+    #array of name: (regex) path: path, imgWidth
+    o=Image.open(filepath)
+    maxWidth = o.size[0] if o.size[0] > maxWidth else print()
+    height += o.size[1]
+    pngs.append(o)
+    names.append(filepath)
 
 
-# print( f"🎨{bc.b}Converting {length} layers...{bc.E}🖼️\n")
-# sleep(1)
 
-# for layer in tqdm(psd, colour="green", postfix="psd-to-spritesheet", dynamic_ncols=True, desc="layers to frames",):
-#      #switch to visible
-#     image = layer.composite(viewport=None, force=False, color=1.0, alpha=0.0, layer_filter=None, apply_icc=False)
-#     image.visible = True
-#     frames.append(image)
+# eh =list(map((lambda x: x.name), getAllPNGs()))
+print(f"Which of these do you wish to combine? \n [ARROW KEYS + SPACEBAR to select]/n/n")
+answers = inquirer.prompt([
+    inquirer.Checkbox(
+        "spritesheets",
+        message="select 2 or more",
+        choices=names,
+        default=pngs  
+    ),  
+])
 
-# widths, heights = zip(*(i.size for i in frames)) 
-# total_width = sum(widths) #horizontal max
-# max_height = max(heights) #height of largest os the base
-# spritesheet = Image.new('RGB', (total_width, max_height))
-# print(f'{bc.b}rendering spritesheet! ....\n {bc.E}')
 
-# x_offset = 0
-# for frame in  tqdm(frames,colour="green",postfix="psd-to-spritesheet",dynamic_ncols=True, desc="frames to spritesheet "):
-#   sleep(.07)
-#   spritesheet.paste(frame, (x_offset,0))
-#   x_offset += frame.size[0]
+createNewSheet()
 
-# spritesheet.save(f'{psd_name}.png')
-# print(f'{bc.b}spritesheet saved as {psd_name}.png \n {bc.E}')
-# print(f"{bc.g}\n done! Converted {length} layers successfully {bc.E}")
+
+

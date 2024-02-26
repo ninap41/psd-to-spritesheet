@@ -4,11 +4,13 @@ from time import sleep
 from tqdm import tqdm
 from bcolors import bc
 
-psd_name = "walk"
-psd = PSDImage.open(psd_name + '.psd')
+psd_name = "talk"
+psd = PSDImage.open('./psds/' +psd_name + '.psd')
 frames = []
 length = len(psd._layers)
-print( f"{bc.b}Looking for{bc.E} {bc.g} {psd_name}.psd {bc.E} \n ")  
+
+print( f"{bc.b}Looking for{bc.E} {bc.g} {psd_name}.psd {bc.E} \n ") 
+print( f"{bc.y} WARNING: Make sure your psd is inside the psd folder... {bc.E} \n ")  
 print( f"{bc.y}WARNING: Make sure all layers are not in GROUPS{bc.E}\n")
 
 print( f"🎨{bc.b}Converting {length} layers...{bc.E}🖼️\n")
@@ -32,6 +34,6 @@ for frame in  tqdm(frames,colour="green",postfix="psd-to-spritesheet",dynamic_nc
   spritesheet.paste(frame, (x_offset,0))
   x_offset += frame.size[0]
 
-spritesheet.save(f'{psd_name}.png')
+spritesheet.save(f'./spritesheets/{psd_name}.png')
 print(f'{bc.b}spritesheet saved as {psd_name}.png \n {bc.E}')
 print(f"{bc.g}\n done! Converted {length} layers successfully {bc.E}")

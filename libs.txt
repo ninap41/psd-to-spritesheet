@@ -1,2 +1,4 @@
 psd_tools
 tqdm
+typer
+inquirer
