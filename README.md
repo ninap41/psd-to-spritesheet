@@ -4,7 +4,7 @@
 
 Requirements:
 
-- Python 3
+- Python 3 (installed with pip & pyenv)
 
 ```
     from psd_tools import PSDImage
@@ -13,7 +13,9 @@ Requirements:
     from tqdm import tqdm
 ```
 
-dependencies: `python3 -m pip install psd_tools`, etc
+Install dependencies one by one `python3 -m pip install psd_tools`, etc.
+
+OR install all via txt file. `pip install -r libs.txt`
 
 ## `psd_to_spritesheet.py`
 
